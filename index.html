@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Simran ❤️</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div id="preloader">
+        <div class="heart-loader"></div>
+        <p>Unpacking memories for Simran...</p>
+    </div>
+
+    <div class="music-control" id="musicBtn" title="Toggle Music">
+        <span class="icon">🎵</span>
+        <audio id="bgMusic" src="bg-music.mp3" loop></audio>
+    </div>
+
+    <main class="container">
+
+        <section class="section landing-section" id="landing">
+            <div class="landing-meta">For My Best Friend</div>
+            <h1 class="landing-title">A little something for you ❤️</h1>
+            <h2 class="landing-subtitle">Happy Best Friend's Day Simran</h2>
+            
+            <div class="floating-dog">🐶</div>
+
+            <div class="envelope-wrapper" id="envelopeWrapper">
+                <div class="envelope" id="mainEnvelope">
+                    <div class="flap"></div>
+                    <div class="pocket"></div>
+                    <div class="letter" id="landingLetter">
+                        <p class="letter-preview">Tap to Open...</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section letter-section hidden-section" id="section1">
+            <div class="scrapbook-paper letter-paper">
+                <div id="typewriterText" class="typewriter-container"></div>
+                <div class="scroll-prompt hidden" id="scrollPrompt1">Scroll to continue ↓</div>
+            </div>
+        </section>
+
+        <section class="section hidden-section" id="section2">
+            <span class="chapter-tag">Chapter 1: The Beginning</span>
+            <h3 class="section-title">The Day We Met</h3>
+            <div class="location-badge">📍 DSN Program</div>
+
+            <div class="carousel-container">
+                <div class="carousel-track">
+                    <div class="carousel-slide"><img data-src="dsn1.png" alt="DSN Memory 1" class="lazy-img"></div>
+                    <div class="carousel-slide"><img data-src="dsn2.png" alt="DSN Memory 2" class="lazy-img"></div>
+                    <div class="carousel-slide"><img data-src="dsn3.png" alt="DSN Memory 3" class="lazy-img"></div>
+                </div>
+                <div class="carousel-dots">
+                    <span class="dot active"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                </div>
+            </div>
+
+            <div class="story-card">
+                <p>We met for the first time during DSN. At that time, we were just two people attending the same program. Little did we know that this friendship would become such an important part of our lives.</p>
+            </div>
+        </section>
+
+        <section class="section hidden-section" id="section3">
+            <h3 class="section-title">The Dog Incident 🐶</h3>
+            
+            <div class="comic-frame">
+                <img data-src="dog-memory.png" alt="Scared of dogs" class="lazy-img comic-img">
+                <div class="dog-floater-mini">🐕</div>
+            </div>
+
+            <div class="story-card comic-text">
+                <p>Among all the memories from DSN, one thing I can never forget is how scared you were of dogs. And somehow I became your unofficial dog protection service.</p>
+            </div>
+        </section>
+
+        <section class="section hidden-section" id="section4">
+            <h3 class="section-title">Food & Conversations</h3>
+            
+            <div class="polaroid-grid">
+                <div class="polaroid tilt-left">
+                    <div class="polaroid-img-wrap"><img data-src="food1.png" alt="Food Memory 1" class="lazy-img"></div>
+                    <div class="polaroid-caption">Yum! 🍕</div>
+                </div>
+                <div class="polaroid tilt-right">
+                    <div class="polaroid-img-wrap"><img data-src="food2.png" alt="Food Memory 2" class="lazy-img"></div>
+                    <div class="polaroid-caption">Endless Talks ☕</div>
+                </div>
+                <div class="polaroid tilt-left">
+                    <div class="polaroid-img-wrap"><img data-src="food3.png" alt="Food Memory 3" class="lazy-img"></div>
+                    <div class="polaroid-caption">Roasting Sessions 😂</div>
+                </div>
+            </div>
+
+            <div class="story-card">
+                <p>Some friendships grow through grand moments. Ours grew through shared meals, endless conversations, roasting each other, and countless little memories.</p>
+            </div>
+        </section>
+
+        <section class="section dark-section hidden-section" id="section5">
+            <div class="star-field"></div>
+            <h3 class="section-title dynamic-light-title">The Last Day of DSN</h3>
+            
+            <div class="split-gallery">
+                <div class="gallery-item-wrap"><img data-src="lastday1.png" alt="Last Day 1" class="lazy-img"></div>
+                <div class="gallery-item-wrap"><img data-src="lastday2.png" alt="Last Day 2" class="lazy-img"></div>
+            </div>
+
+            <div class="story-card dark-card">
+                <p id="pauseTextLine1">Then came the final day. The day we had to leave. And that day it felt like I was a completely new person...much much much happy.</p>
+                <p id="pauseTextLine2" class="delayed-text">We laughed. We cried. And somewhere in that goodbye, a lifelong friendship began.</p>
+            </div>
+        </section>
+
+        <section class="section hidden-section" id="section6">
+            <h3 class="section-title">Sangam & Station</h3>
+            
+            <div class="journey-map-container">
+                <div class="scooter-track">
+                    <div class="scooter-icon" id="scooter">🛵</div>
+                </div>
+                <div class="timeline-nodes">
+                    <span class="node active">DSN</span>
+                    <span class="node">Sangam</span>
+                    <span class="node">Station</span>
+                </div>
+            </div>
+
+            <div class="split-gallery clear-gallery">
+                <div class="gallery-item-wrap"><img data-src="sangam1.png" alt="Sangam 1" class="lazy-img"></div>
+                <div class="gallery-item-wrap"><img data-src="sangam2.png" alt="Sangam 2" class="lazy-img"></div>
+            </div>
+
+            <div class="story-card">
+                <p>"One final ride. One final visit. One final memory before the train left."</p>
+            </div>
+        </section>
+
+        <section class="section dark-section hidden-section" id="section7">
+            <div class="star-field"></div>
+            <h3 class="section-title dynamic-light-title">Late Night Calls</h3>
+
+            <div class="phone-interface">
+                <div class="phone-header">
+                    <span class="caller-name">Simran 🤍</span>
+                    <span class="call-status">Connected...</span>
+                </div>
+                <div class="phone-body">
+                    <div class="floating-logs-container">
+                        <div class="log-bubble">Incoming: 02:40 AM</div>
+                        <div class="log-bubble post-delayed">Duration: 4h 32m</div>
+                        <div class="log-bubble post-delayed-more">Memories synced...</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="story-card dark-card">
+                <p>Distance never became a problem. Hours turned into conversations. Conversations turned into memories. And memories turned into a friendship that kept growing stronger.</p>
+            </div>
+        </section>
+
+        <section class="section hidden-section" id="section8">
+            <span class="chapter-tag">Travel Diary</span>
+            <h3 class="section-title">Lucknow Memories</h3>
+
+            <div class="journal-grid">
+                <div class="journal-card"><img data-src="lucknow1.png" alt="Lucknow 1" class="lazy-img"></div>
+                <div class="journal-card"><img data-src="lucknow2.png" alt="Lucknow 2" class="lazy-img"></div>
+                <div class="journal-card"><img data-src="lucknow3.png" alt="Lucknow 3" class="lazy-img"></div>
+                <div class="journal-card"><img data-src="lucknow4.png" alt="Lucknow 4" class="lazy-img"></div>
+            </div>
+
+            <div class="story-card">
+                <p>Then came Lucknow. More adventures. More laughter. More stories to remember.</p>
+            </div>
+        </section>
+
+        <section class="section hidden-section" id="section9">
+            <h3 class="section-title">Bangalore Ashram</h3>
+
+            <div class="peaceful-gallery">
+                <div class="peaceful-item"><img data-src="bangalore1.png" alt="Bangalore 1" class="lazy-img"></div>
+                <div class="peaceful-item"><img data-src="bangalore2.png" alt="Bangalore 2" class="lazy-img"></div>
+                <div class="peaceful-item"><img data-src="bangalore3.png" alt="Bangalore 3" class="lazy-img"></div>
+            </div>
+
+            <div class="story-card">
+                <p>There was a time when I wasn't sure I could make this trip. Plans were uncertain. But you and Sunidhi kept encouraging me. Because of you both, I got to experience that I would never want to miss.</p>
+            </div>
+        </section>
+
+        <section class="section hidden-section" id="section10">
+            <h3 class="section-title">What Changed</h3>
+
+            <div class="minimal-showcase">
+                <img data-src="change.png" alt="What changed" class="lazy-img showcase-img">
+            </div>
+
+            <div class="lines-container">
+                <p class="fade-line">After meeting you...</p>
+                <p class="fade-line">I smiled more.</p>
+                <p class="fade-line">I laughed more.</p>
+                <p class="fade-line">I worried less.</p>
+                <p class="fade-line">And life became a little brighter.</p>
+            </div>
+        </section>
+
+        <section class="section hidden-section" id="section11">
+            <h3 class="section-title">Our Stats Breakdown</h3>
+            
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <span class="counter" data-target="days">0</span>
+                    <span class="stat-label">Days of Friendship</span>
+                </div>
+                <div class="stat-box">
+                    <span class="counter" data-target="trips">0</span>
+                    <span class="stat-label">Trips Together</span>
+                </div>
+                <div class="stat-box">
+                    <span class="counter" data-target="calls">0</span>
+                    <span class="stat-label">Hours of Calls</span>
+                </div>
+                <div class="stat-box">
+                    <span class="counter" data-target="photos">0</span>
+                    <span class="stat-label">Photos Shared</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="section hidden-section" id="section12">
+            <div class="final-envelope-box">
+                <div class="paper-sheet">
+                    <h4 class="handwritten-title">Dear Simran,</h4>
+                    <p class="handwritten-text">
+                        Thank you for every conversation. Thank you for every memory. Thank you for every laugh. Thank you for always being there.
+                        <br><br>
+                        Our journey started with tears, and that's what makes it so special. From that emotional beginning at DSN to all the memories we've created since, this friendship has become one of the most precious parts of our life.
+                    </p>
+                    <p class="handwritten-signature">Happy Best Friend's Day ❤️</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section final-collage-section hidden-section" id="finalScreen">
+            <div class="heart-collage-container" id="heartCollage"></div>
+            
+            <div class="final-overlay-content">
+                <p class="final-quote-1">DSN was where we met.<br>Friendship is what stayed.</p>
+                <h2 class="final-wishes">Happy Best Friend's Day Simran ❤️</h2>
+                <button class="replay-btn" id="replayBtn">Replay Journey 🔄</button>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>

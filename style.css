@@ -1,0 +1,436 @@
+/* ==========================================================================
+   GLOBAL DESIGN VARIABLES & RESETS (Mobile-First Philosophy)
+   ========================================================================== */
+:root {
+    --bg-pastel-gradient: linear-gradient(135deg, #fff5f5 0%, #f0f4ff 100%);
+    --card-bg: rgba(255, 255, 255, 0.85);
+    --dark-bg: #121622;
+    --text-primary: #3d3444;
+    --text-muted: #7d6e83;
+    --accent-pink: #ff7b93;
+    --accent-blue: #a0c4ff;
+    --paper-line: #e2d2ff;
+    --font-handwritten: 'Caveat', cursive;
+    --font-serif: 'Playfair Display', Georgia, serif;
+    --font-sans: 'Poppins', sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    font-family: var(--font-sans);
+    background: #fff5f5;
+    color: var(--text-primary);
+    overflow-x: hidden;
+    line-height: 1.6;
+}
+
+/* Container limits viewport spread to look excellent on mobile */
+.container {
+    width: 100%;
+    max-width: 480px; 
+    margin: 0 auto;
+    background: var(--bg-pastel-gradient);
+    min-height: 100vh;
+    box-shadow: 0 0 30px rgba(0,0,0,0.03);
+    position: relative;
+}
+
+/* ==========================================================================
+   COMPONENTS & UTILITIES
+   ========================================================================== */
+.section {
+    min-height: 100vh;
+    padding: 40px 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.dark-section {
+    background: var(--dark-bg) !important;
+    color: #f0f4ff;
+}
+
+.hidden-section {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.9s ease, transform 0.9s ease;
+}
+
+.visible-section {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Image Preservation Protection (Strictly no distortion or blind cropping) */
+img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* Assures absolute container preservation without text/head cropping */
+    display: block;
+    border-radius: 8px;
+}
+
+.story-card {
+    background: var(--card-bg);
+    border-radius: 16px;
+    padding: 20px;
+    margin-top: 24px;
+    box-shadow: 0 8px 24px rgba(225, 200, 200, 0.3);
+    border: 1px solid rgba(255,255,255,0.6);
+    font-size: 0.95rem;
+    text-align: center;
+    z-index: 5;
+    width: 100%;
+}
+
+.dark-card {
+    background: rgba(25, 30, 45, 0.8);
+    border-color: rgba(255,255,255,0.08);
+    color: #e2e8f0;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+}
+
+.section-title {
+    font-family: var(--font-serif);
+    font-size: 1.8rem;
+    color: #4a3b52;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.dynamic-light-title {
+    color: #f7e6ff;
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
+}
+
+.chapter-tag {
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent-pink);
+    font-weight: 500;
+    margin-bottom: 4px;
+}
+
+/* Preloader UI */
+#preloader {
+    position: fixed;
+    top:0; left:0; width:100vw; height:100vh;
+    background: #fff5f5;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.heart-loader {
+    width: 50px; height: 50px;
+    background: var(--accent-pink);
+    position: relative;
+    transform: rotate(-45deg);
+    animation: pulse 1.2s infinite;
+}
+.heart-loader::before, .heart-loader::after {
+    content: ""; width: 50px; height: 50px;
+    background: var(--accent-pink);
+    border-radius: 50%; position: absolute;
+}
+.heart-loader::before { top: -25px; left: 0; }
+.heart-loader::after { left: 25px; top: 0; }
+@keyframes pulse {
+    0% { transform: scale(0.8) rotate(-45deg); }
+    50% { transform: scale(1.1) rotate(-45deg); }
+    100% { transform: scale(0.8) rotate(-45deg); }
+}
+#preloader p {
+    margin-top: 35px; font-family: var(--font-handwritten);
+    font-size: 1.5rem; color: var(--text-muted);
+}
+
+/* Audio Switch Layer */
+.music-control {
+    position: fixed; top: 16px; right: 16px;
+    width: 42px; height: 42px; background: white;
+    border-radius: 50%; display: flex; justify-content: center;
+    align-items: center; box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    z-index: 1000; cursor: pointer; transition: transform 0.2s;
+}
+.music-control.playing { animation: spin 4s linear infinite; }
+@keyframes spin { 100% { transform: rotate(360deg); } }
+
+/* ==========================================================================
+   LANDING HERO SCREEN & ANIMATED ENVELOPE
+   ========================================================================== */
+.landing-section { background: var(--bg-pastel-gradient); text-align: center; }
+.landing-meta { font-size: 0.85rem; letter-spacing: 3px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px;}
+.landing-title { font-family: var(--font-serif); font-size: 2rem; font-weight: 600; margin-bottom: 6px; color: #2d1e36; }
+.landing-subtitle { font-family: var(--font-handwritten); font-size: 1.7rem; color: var(--accent-pink); margin-bottom: 40px; }
+
+.floating-dog {
+    font-size: 3rem; animation: floatDog 3.5s ease-in-out infinite;
+    margin-bottom: 10px; z-index: 10; pointer-events: none;
+}
+@keyframes floatDog {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-15px) rotate(8deg); }
+}
+
+/* Envelope Box System */
+.envelope-wrapper { height: 200px; display: flex; justify-content: center; align-items: center; }
+.envelope {
+    position: relative; width: 220px; height: 140px;
+    background: #fcd5ce; box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+    border-radius: 0 0 8px 8px; cursor: pointer;
+}
+.flap {
+    position: absolute; top: 0; left: 0; width: 0; height: 0;
+    border-left: 110px solid transparent; border-right: 110px solid transparent;
+    border-top: 80px solid #fbc4b9; transform-origin: top; transition: transform 0.4s ease 0.2s, z-index 0.2s;
+    z-index: 4;
+}
+.pocket {
+    position: absolute; bottom: 0; left: 0; width: 0; height: 0;
+    border-left: 110px solid #fae1dd; border-right: 110px solid #fae1dd;
+    border-bottom: 75px solid #f8c3ba; border-radius: 0 0 8px 8px; z-index: 3;
+}
+.letter {
+    position: absolute; bottom: 10px; left: 15px; width: 190px; height: 110px;
+    background: #fff; border-radius: 4px; padding: 12px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05); transition: transform 0.5s ease;
+    z-index: 2; display: flex; justify-content: center; align-items: center;
+}
+.letter-preview { font-family: var(--font-handwritten); font-size: 1.4rem; color: var(--accent-pink); }
+
+/* Animation trigger states */
+.envelope.open .flap { transform: rotateX(180deg); z-index: 1; }
+.envelope.open .letter { transform: translateY(-80px); z-index: 5; box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+
+/* ==========================================================================
+   SECTION 1: LETTER WRITER
+   ========================================================================== */
+.scrapbook-paper {
+    background: #fffff8; background-image: linear-gradient(var(--paper-line) 1px, transparent 1px);
+    background-size: 100% 28px; border-radius: 12px; width: 100%; padding: 40px 20px 20px;
+    box-shadow: 2px 8px 20px rgba(0,0,0,0.04); border: 1px solid #f0e6ff; position: relative;
+}
+.scrapbook-paper::before {
+    content: ''; position: absolute; top: 0; left: 30px; width: 2px; height: 100%;
+    background: #ffb3c1; opacity: 0.5;
+}
+.typewriter-container {
+    font-family: var(--font-handwritten); font-size: 1.55rem;
+    line-height: 28px; color: #44384a; padding-left: 24px; min-height: 200px;
+}
+.scroll-prompt {
+    text-align: center; font-size: 0.85rem; margin-top: 30px;
+    color: var(--accent-pink); font-weight: 500; animation: bounce 1.5s infinite;
+}
+@keyframes bounce { 0%,100% {transform:translateY(0);} 50% {transform:translateY(-6px);} }
+
+/* ==========================================================================
+   SECTION 2: CAROUSEL (CHAPTER 1)
+   ========================================================================== */
+.location-badge {
+    background: #e8e6ff; color: #6c5ce7; font-size: 0.8rem;
+    padding: 4px 12px; border-radius: 20px; font-weight: 500; margin-bottom: 20px;
+}
+.carousel-container {
+    width: 100%; height: 260px; position: relative; overflow: hidden; border-radius: 14px;
+    background: rgba(255,255,255,0.4); border: 4px solid white; box-shadow: 0 6px 16px rgba(0,0,0,0.03);
+}
+.carousel-track { display: flex; width: 300%; height: 100%; transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+.carousel-slide { width: 33.333%; height: 100%; padding: 6px; display: flex; justify-content: center; align-items: center; }
+.carousel-dots { display: flex; gap: 8px; margin-top: 12px; }
+.dot { width: 8px; height: 8px; background: #dcd1e0; border-radius: 50%; transition: background 0.3s; }
+.dot.active { background: var(--accent-pink); }
+
+/* ==========================================================================
+   SECTION 3: COMIC FRAME (DOG INCIDENT)
+   ========================================================================== */
+.comic-frame {
+    width: 100%; height: 240px; background: white; border: 6px solid #222;
+    box-shadow: 8px 8px 0px #edd3da; transform: rotate(-1.5deg); position: relative;
+    padding: 8px; overflow: hidden; display: flex; justify-content: center; align-items: center;
+}
+.comic-img { width: 100%; height: 100%; object-fit: contain; border-radius: 0; }
+.dog-floater-mini {
+    position: absolute; bottom: 10px; right: 10px; font-size: 2rem;
+    animation: wag 0.6s infinite alternate;
+}
+@keyframes wag { 0% { transform: rotate(-5deg); } 100% { transform: rotate(15deg); } }
+
+/* ==========================================================================
+   SECTION 4: POLAROIDS (FOOD & TALKS)
+   ========================================================================== */
+.polaroid-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 14px; width: 100%; margin-bottom: 10px;
+}
+.polaroid-grid .polaroid:nth-child(3) { grid-column: span 2; justify-self: center; width: 65%; }
+.polaroid {
+    background: white; padding: 10px 10px 18px 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+    border: 1px solid #f2edf5; transition: transform 0.3s;
+}
+.polaroid-img-wrap { width: 100%; height: 140px; background: #fafafa; overflow: hidden; display: flex; justify-content: center; align-items: center; }
+.polaroid-caption {
+    font-family: var(--font-handwritten); font-size: 1.2rem;
+    text-align: center; margin-top: 8px; color: #5a4b61;
+}
+.tilt-left { transform: rotate(-4deg); }
+.tilt-right { transform: rotate(5deg); }
+
+/* ==========================================================================
+   SECTION 5 & 7: DARK STARS ENVIRONMENT
+   ========================================================================== */
+.star-field {
+    position: absolute; top:0; left:0; width:100%; height:100%;
+    background-image: radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 40px);
+    background-size: 80px 80px; opacity: 0.15; pointer-events: none;
+}
+.split-gallery { display: flex; gap: 12px; width: 100%; height: 180px; margin-bottom: 10px; }
+.gallery-item-wrap {
+    flex: 1; height: 100%; border: 3px solid rgba(255,255,255,0.08);
+    border-radius: 10px; background: rgba(0,0,0,0.2); display: flex; justify-content: center; align-items: center; overflow: hidden;
+}
+.delayed-text { margin-top: 12px; border-top: 1px dashed rgba(255,255,255,0.15); padding-top: 12px; opacity: 0.9; }
+
+/* ==========================================================================
+   SECTION 6: JOURNEY PATH & MAP
+   ========================================================================== */
+.journey-map-container { width: 100%; margin: 20px 0; padding: 0 10px; }
+.scooter-track {
+    width: 100%; height: 6px; background: #eddce4; border-radius: 3px;
+    position: relative; margin-bottom: 16px;
+}
+.scooter-icon {
+    position: absolute; top: -14px; left: 0%; font-size: 1.4rem;
+    transition: left 1.5s cubic-bezier(0.25, 1, 0.5, 1);
+}
+.timeline-nodes { display: flex; justify-content: space-between; }
+.node { font-size: 0.8rem; color: var(--text-muted); position: relative; font-weight: 500; }
+.node.active { color: var(--accent-pink); font-weight: 600; }
+.clear-gallery .gallery-item-wrap { border: 4px solid white; box-shadow: 0 4px 10px rgba(0,0,0,0.04); background: #fff;}
+
+/* ==========================================================================
+   SECTION 7: PHONE DESIGN LAYOUT
+   ========================================================================== */
+.phone-interface {
+    width: 85%; background: #1c2237; border-radius: 24px; border: 4px solid #2d354f;
+    padding: 18px; box-shadow: 0 12px 32px rgba(0,0,0,0.4); display: flex; flex-direction: column; gap: 16px;
+}
+.phone-header { text-align: center; }
+.caller-name { display: block; font-size: 1.3rem; font-weight: 500; color: #fff; }
+.call-status { font-size: 0.75rem; color: #00ffaa; letter-spacing: 1px; }
+.floating-logs-container { display: flex; flex-direction: column; gap: 8px; align-items: center; margin: 10px 0; }
+.log-bubble {
+    background: rgba(255,255,255,0.06); padding: 6px 14px; border-radius: 12px;
+    font-size: 0.8rem; color: #cbd5e1; border: 1px solid rgba(255,255,255,0.03);
+    transform: scale(0.9); opacity: 0; transition: all 0.5s ease;
+}
+.phone-interface.active-call .log-bubble { transform: scale(1); opacity: 1; }
+.phone-interface.active-call .post-delayed { transition-delay: 0.4s; }
+.phone-interface.active-call .post-delayed-more { transition-delay: 0.8s; }
+
+/* ==========================================================================
+   SECTION 8 & 9: TRAVEL ENTRIES
+   ========================================================================== */
+.journal-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 100%; }
+.journal-card {
+    background: white; padding: 6px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.04);
+    height: 110px; display: flex; justify-content: center; align-items: center;
+}
+.peaceful-gallery { display: flex; flex-direction: column; gap: 12px; width: 100%; }
+.peaceful-item {
+    background: #fff; padding: 6px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+    height: 150px; display: flex; justify-content: center; align-items: center;
+}
+
+/* ==========================================================================
+   SECTION 10: MINIMAL SHOWCASE
+   ========================================================================== */
+.minimal-showcase {
+    width: 80%; height: 220px; background: white; border-radius: 16px;
+    padding: 8px; box-shadow: 0 10px 25px rgba(0,0,0,0.04); display: flex; justify-content: center; align-items: center;
+}
+.lines-container { margin-top: 24px; text-align: center; width: 100%; }
+.fade-line {
+    font-family: var(--font-serif); font-size: 1.1rem; margin-bottom: 8px;
+    opacity: 0; transform: translateY(10px); transition: all 0.6s ease;
+    color: var(--text-muted);
+}
+.fade-line.viewed { opacity: 1; transform: translateY(0); color: #35263d; }
+.fade-line.viewed:nth-child(2) { transition-delay: 0.3s; font-weight: 600; }
+.fade-line.viewed:nth-child(3) { transition-delay: 0.6s; font-weight: 600; }
+.fade-line.viewed:nth-child(4) { transition-delay: 0.9s; }
+.fade-line.viewed:nth-child(5) { transition-delay: 1.2s; color: var(--accent-pink); font-weight: 600; }
+
+/* ==========================================================================
+   SECTION 11: COUNTERS & STATS
+   ========================================================================== */
+.stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; width: 100%; }
+.stat-box {
+    background: var(--card-bg); border-radius: 16px; padding: 20px 10px;
+    text-align: center; border: 1px solid rgba(255,255,255,0.7);
+    box-shadow: 0 6px 16px rgba(180,150,160,0.1);
+}
+.counter {
+    display: block; font-size: 2.2rem; font-family: var(--font-serif);
+    font-weight: 600; color: var(--accent-pink); margin-bottom: 4px;
+}
+.stat-label { font-size: 0.8rem; color: var(--text-muted); font-weight: 500; }
+
+/* ==========================================================================
+   SECTION 12: HANDWRITTEN FINAL LETTER
+   ========================================================================== */
+.final-envelope-box { width: 100%; }
+.paper-sheet {
+    background: #fffdf2; box-shadow: 0 10px 26px rgba(0,0,0,0.05);
+    border-radius: 4px; padding: 30px 24px; border: 1px solid #f4eed0;
+    position: relative; transform: rotate(-0.5deg);
+}
+.paper-sheet::after {
+    content: '❤️'; position: absolute; bottom: 15px; right: 20px; font-size: 1.5rem; opacity: 0.2;
+}
+.handwritten-title { font-family: var(--font-handwritten); font-size: 1.8rem; color: #2d2233; margin-bottom: 12px; }
+.handwritten-text { font-family: var(--font-handwritten); font-size: 1.45rem; line-height: 1.5; color: #403547; text-align: left; }
+.handwritten-signature { font-family: var(--font-handwritten); font-size: 1.6rem; text-align: right; margin-top: 24px; color: var(--accent-pink); font-weight: 700; }
+
+/* ==========================================================================
+   FINAL SCREEN & COLLAGE ENGINE
+   ========================================================================== */
+.final-collage-section { background: #fff1f3 !important; text-align: center; justify-content: space-between; padding: 50px 24px 30px; }
+.heart-collage-container {
+    width: 100%; height: 320px; position: relative; margin-top: 20px;
+}
+/* Individual dynamic mini items inside the programmatic engine */
+.collage-item {
+    position: absolute; width: 65px; height: 65px; background: white;
+    padding: 3px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); border-radius: 4px;
+    opacity: 0; bottom: 0; left: 45%;
+    display: flex; justify-content: center; align-items: center;
+}
+.collage-item img { border-radius: 2px; width: 100%; height: 100%; object-fit: contain; }
+
+.final-overlay-content { z-index: 10; width: 100%; background: linear-gradient(to top, #fff1f3 80%, transparent); padding-top: 20px; }
+.final-quote-1 { font-family: var(--font-serif); font-size: 1.2rem; color: var(--text-muted); margin-bottom: 12px; line-height: 1.5; }
+.final-wishes { font-family: var(--font-handwritten); font-size: 2.2rem; color: var(--accent-pink); margin-bottom: 28px; }
+.replay-btn {
+    background: white; border: 2px solid var(--accent-pink); color: var(--accent-pink);
+    padding: 12px 28px; border-radius: 30px; font-family: var(--font-sans);
+    font-size: 0.9rem; font-weight: 500; cursor: pointer; transition: all 0.3s;
+    box-shadow: 0 4px 12px rgba(255,123,147,0.15);
+}
+.replay-btn:active { transform: scale(0.96); background: var(--accent-pink); color: white; }
+
+/* Smooth Lazy Loaded Image State */
+.lazy-img { opacity: 0; transition: opacity 0.5s ease; }
+.lazy-img.loaded { opacity: 1; }
