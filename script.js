@@ -33,15 +33,17 @@ window.addEventListener('DOMContentLoaded', () => {
     // Hide Preloader once basic components load up safely
     setTimeout(() => {
         const preloader = document.getElementById('preloader');
-        preloader.style.opacity = '0';
-        preloader.style.transition = 'opacity 0.5s ease';
-        setTimeout(() => preloader.style.display = 'none', 500);
+        if (preloader) {
+            preloader.style.opacity = '0';
+            preloader.style.transition = 'opacity 0.5s ease';
+            setTimeout(() => preloader.style.display = 'none', 500);
+        }
     }, 1200);
 
     initEnvelope();
     initScrollAnimations();
     initCarousel();
-    function initAudioController() {     const musicBtn = document.getElementById('musicBtn');     const audio = document.getElementById('bgMusic');          if(!musicBtn || !audio) return;      // Direct click handler optimized for mobile browsers     musicBtn.addEventListener('click', (e) => {         e.stopPropagation(); // Prevents the click from interfering with other elements                  if (audio.paused) {             audio.play().then(() => {                 musicBtn.classList.add('playing');             }).catch(err => {                 console.log("Audio play blocked by device policies:", err);                 // Secondary fallback attempt for strict mobile browsers                 audio.muted = false;                 audio.play();                 musicBtn.classList.add('playing');             });         } else {             audio.pause();             musicBtn.classList.remove('playing');         }     }); };
+    initAudioController();
 });
 
 /**
@@ -49,17 +51,25 @@ window.addEventListener('DOMContentLoaded', () => {
  * MUSIC / AUDIO ENGINE
  * ==========================================================================
  */
-function function initAudioController() {     const musicBtn = document.getElementById('musicBtn');     const audio = document.getElementById('bgMusic');          if(!musicBtn || !audio) return;      // Direct click handler optimized for mobile browsers     musicBtn.addEventListener('click', (e) => {         e.stopPropagation(); // Prevents the click from interfering with other elements                  if (audio.paused) {             audio.play().then(() => {                 musicBtn.classList.add('playing');             }).catch(err => {                 console.log("Audio play blocked by device policies:", err);                 // Secondary fallback attempt for strict mobile browsers                 audio.muted = false;                 audio.play();                 musicBtn.classList.add('playing');             });         } else {             audio.pause();             musicBtn.classList.remove('playing');         }     }); } {
+function initAudioController() {
     const musicBtn = document.getElementById('musicBtn');
     const audio = document.getElementById('bgMusic');
     
     if(!musicBtn || !audio) return;
 
-    musicBtn.addEventListener('click', () => {
+    musicBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        
         if (audio.paused) {
             audio.play().then(() => {
                 musicBtn.classList.add('playing');
-            }).catch(err => console.log("Audio play blocked by device policies:", err));
+            }).catch(err => {
+                console.log("Audio play blocked by device policies:", err);
+                // Secondary fallback attempt for strict mobile browsers
+                audio.muted = false;
+                audio.play();
+                musicBtn.classList.add('playing');
+            });
         } else {
             audio.pause();
             musicBtn.classList.remove('playing');
@@ -84,8 +94,10 @@ function initEnvelope() {
             
             // Wait for envelope layout animations to naturally breathe, then scroll down
             setTimeout(() => {
-                sec1.classList.add('visible-section');
-                sec1.scrollIntoView({ behavior: 'smooth' });
+                if (sec1) {
+                    sec1.classList.add('visible-section');
+                    sec1.scrollIntoView({ behavior: 'smooth' });
+                }
                 // Trigger the emotional typewriter typewriter execution sequence
                 startTypewriter();
             }, 1200);
@@ -156,7 +168,7 @@ function initScrollAnimations() {
     const observerOptions = {
         root: null,
         rootMargin: '0px',
-        threshold: 0.15 // Fires as soon as elements safely peak out on modern mobile viewports
+        threshold: 0.05 // FIXED: Lowered threshold so compact sections trigger instantly on mobile!
     };
 
     const scrollObserver = new IntersectionObserver((entries, observer) => {
@@ -176,10 +188,12 @@ function initScrollAnimations() {
 
                 // Contextual Component Animators
                 if(target.id === 'section6') {
-                    document.getElementById('scooter').style.left = '85%';
+                    const scooter = document.getElementById('scooter');
+                    if(scooter) scooter.style.left = '85%';
                 }
                 if(target.id === 'section7') {
-                    target.querySelector('.phone-interface').classList.add('active-call');
+                    const phone = target.querySelector('.phone-interface');
+                    if(phone) phone.classList.add('active-call');
                 }
                 if(target.id === 'section10') {
                     target.querySelectorAll('.fade-line').forEach(line => line.classList.add('viewed'));
