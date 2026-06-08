@@ -71,13 +71,17 @@ body {
     transform: translateY(0);
 }
 
-/* Image Preservation Protection (Strictly no distortion or blind cropping) */
+/* IMAGE PROTECTION RULE:
+   - Changed object-fit to 'contain' globally.
+   - Max width and height ensure images sit completely loose and organic, 
+     matching their true structural boundaries without clipping edges.
+*/
 img {
     width: 100%;
     height: 100%;
-    object-fit: contain; /* Assures absolute container preservation without text/head cropping */
+    object-fit: contain; 
     display: block;
-    border-radius: 8px;
+    border-radius: 12px;
 }
 
 .story-card {
@@ -85,7 +89,7 @@ img {
     border-radius: 16px;
     padding: 20px;
     margin-top: 24px;
-    box-shadow: 0 8px 24px rgba(225, 200, 200, 0.3);
+    box-shadow: 0 8px 24px rgba(225, 200, 200, 0.15);
     border: 1px solid rgba(255,255,255,0.6);
     font-size: 0.95rem;
     text-align: center;
@@ -238,31 +242,46 @@ img {
 @keyframes bounce { 0%,100% {transform:translateY(0);} 50% {transform:translateY(-6px);} }
 
 /* ==========================================================================
-   SECTION 2: CAROUSEL (CHAPTER 1)
+   SECTION 2: CAROUSEL (FRAMELESS INTERFACE)
    ========================================================================== */
 .location-badge {
     background: #e8e6ff; color: #6c5ce7; font-size: 0.8rem;
     padding: 4px 12px; border-radius: 20px; font-weight: 500; margin-bottom: 20px;
 }
 .carousel-container {
-    width: 100%; height: 260px; position: relative; overflow: hidden; border-radius: 14px;
-    background: rgba(255,255,255,0.4); border: 4px solid white; box-shadow: 0 6px 16px rgba(0,0,0,0.03);
+    width: 100%; 
+    height: 300px; /* Enhanced vertical clearance */
+    position: relative; 
+    overflow: hidden; 
+    border-radius: 0;
+    background: transparent; 
+    border: none; 
+    box-shadow: none;
 }
 .carousel-track { display: flex; width: 300%; height: 100%; transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
-.carousel-slide { width: 33.333%; height: 100%; padding: 6px; display: flex; justify-content: center; align-items: center; }
-.carousel-dots { display: flex; gap: 8px; margin-top: 12px; }
+.carousel-slide { width: 33.333%; height: 100%; padding: 0px; display: flex; justify-content: center; align-items: center; }
+.carousel-dots { display: flex; gap: 8px; margin-top: 16px; }
 .dot { width: 8px; height: 8px; background: #dcd1e0; border-radius: 50%; transition: background 0.3s; }
 .dot.active { background: var(--accent-pink); }
 
 /* ==========================================================================
-   SECTION 3: COMIC FRAME (DOG INCIDENT)
+   SECTION 3: CLEAN COMIC BOX (DOG INCIDENT)
    ========================================================================== */
 .comic-frame {
-    width: 100%; height: 240px; background: white; border: 6px solid #222;
-    box-shadow: 8px 8px 0px #edd3da; transform: rotate(-1.5deg); position: relative;
-    padding: 8px; overflow: hidden; display: flex; justify-content: center; align-items: center;
+    width: 100%; 
+    height: 280px; 
+    background: transparent; 
+    border: none;
+    box-shadow: none; 
+    transform: none; 
+    position: relative;
+    padding: 0; 
+    overflow: hidden; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
 }
-.comic-img { width: 100%; height: 100%; object-fit: contain; border-radius: 0; }
+.comic-img { border-radius: 12px; }
 .dog-floater-mini {
     position: absolute; bottom: 10px; right: 10px; font-size: 2rem;
     animation: wag 0.6s infinite alternate;
@@ -270,41 +289,68 @@ img {
 @keyframes wag { 0% { transform: rotate(-5deg); } 100% { transform: rotate(15deg); } }
 
 /* ==========================================================================
-   SECTION 4: POLAROIDS (FOOD & TALKS)
+   SECTION 4: FRAMELESS POLAROIDS GRID (FOOD & TALKS)
    ========================================================================== */
 .polaroid-grid {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 14px; width: 100%; margin-bottom: 10px;
+    display: grid; 
+    grid-template-columns: 1fr 1fr; 
+    gap: 16px; 
+    width: 100%; 
+    margin-bottom: 10px;
 }
-.polaroid-grid .polaroid:nth-child(3) { grid-column: span 2; justify-self: center; width: 65%; }
+.polaroid-grid .polaroid:nth-child(3) { grid-column: span 2; justify-self: center; width: 80%; }
 .polaroid {
-    background: white; padding: 10px 10px 18px 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.06);
-    border: 1px solid #f2edf5; transition: transform 0.3s;
+    background: transparent; 
+    padding: 0; 
+    box-shadow: none;
+    border: none; 
+    transition: transform 0.3s;
 }
-.polaroid-img-wrap { width: 100%; height: 140px; background: #fafafa; overflow: hidden; display: flex; justify-content: center; align-items: center; }
+/* Keeps clean aspect-ratio containment without masking backing panels */
+.polaroid-img-wrap { 
+    width: 100%; 
+    height: 160px; 
+    background: transparent; 
+    overflow: hidden; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+}
 .polaroid-caption {
-    font-family: var(--font-handwritten); font-size: 1.2rem;
-    text-align: center; margin-top: 8px; color: #5a4b61;
+    font-family: var(--font-handwritten); 
+    font-size: 1.3rem;
+    text-align: center; 
+    margin-top: 10px; 
+    color: #5a4b61;
 }
-.tilt-left { transform: rotate(-4deg); }
-.tilt-right { transform: rotate(5deg); }
+/* Retains the playful tilt of the scrapbook look, but without border lines */
+.tilt-left { transform: rotate(-3deg); }
+.tilt-right { transform: rotate(3deg); }
 
 /* ==========================================================================
-   SECTION 5 & 7: DARK STARS ENVIRONMENT
+   SECTION 5 & 7: DARK ENVIRONMENT
    ========================================================================== */
 .star-field {
     position: absolute; top:0; left:0; width:100%; height:100%;
     background-image: radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 40px);
     background-size: 80px 80px; opacity: 0.15; pointer-events: none;
 }
-.split-gallery { display: flex; gap: 12px; width: 100%; height: 180px; margin-bottom: 10px; }
+.split-gallery { display: flex; gap: 16px; width: 100%; height: 200px; margin-bottom: 10px; }
 .gallery-item-wrap {
-    flex: 1; height: 100%; border: 3px solid rgba(255,255,255,0.08);
-    border-radius: 10px; background: rgba(0,0,0,0.2); display: flex; justify-content: center; align-items: center; overflow: hidden;
+    flex: 1; 
+    height: 100%; 
+    border: none;
+    border-radius: 0; 
+    background: transparent; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    overflow: hidden;
 }
 .delayed-text { margin-top: 12px; border-top: 1px dashed rgba(255,255,255,0.15); padding-top: 12px; opacity: 0.9; }
 
 /* ==========================================================================
-   SECTION 6: JOURNEY PATH & MAP
+   SECTION 6: JOURNEY SCATTER PATH
    ========================================================================== */
 .journey-map-container { width: 100%; margin: 20px 0; padding: 0 10px; }
 .scooter-track {
@@ -318,10 +364,16 @@ img {
 .timeline-nodes { display: flex; justify-content: space-between; }
 .node { font-size: 0.8rem; color: var(--text-muted); position: relative; font-weight: 500; }
 .node.active { color: var(--accent-pink); font-weight: 600; }
-.clear-gallery .gallery-item-wrap { border: 4px solid white; box-shadow: 0 4px 10px rgba(0,0,0,0.04); background: #fff;}
+
+/* Strips background frames from section 6 gallery */
+.clear-gallery .gallery-item-wrap { 
+    border: none; 
+    box-shadow: none; 
+    background: transparent;
+}
 
 /* ==========================================================================
-   SECTION 7: PHONE DESIGN LAYOUT
+   SECTION 7: PHONE TELEPHONY PANEL
    ========================================================================== */
 .phone-interface {
     width: 85%; background: #1c2237; border-radius: 24px; border: 4px solid #2d354f;
@@ -341,26 +393,47 @@ img {
 .phone-interface.active-call .post-delayed-more { transition-delay: 0.8s; }
 
 /* ==========================================================================
-   SECTION 8 & 9: TRAVEL ENTRIES
+   SECTION 8 & 9: JOURNAL DIARY (FRAMELESS)
    ========================================================================== */
-.journal-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 100%; }
+.journal-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; width: 100%; }
 .journal-card {
-    background: white; padding: 6px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.04);
-    height: 110px; display: flex; justify-content: center; align-items: center;
+    background: transparent; 
+    padding: 0; 
+    border-radius: 0; 
+    box-shadow: none;
+    height: 130px; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
 }
-.peaceful-gallery { display: flex; flex-direction: column; gap: 12px; width: 100%; }
+.peaceful-gallery { display: flex; flex-direction: column; gap: 16px; width: 100%; }
 .peaceful-item {
-    background: #fff; padding: 6px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.03);
-    height: 150px; display: flex; justify-content: center; align-items: center;
+    background: transparent; 
+    padding: 0; 
+    border-radius: 0; 
+    box-shadow: none;
+    height: 180px; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
 }
 
 /* ==========================================================================
    SECTION 10: MINIMAL SHOWCASE
    ========================================================================== */
 .minimal-showcase {
-    width: 80%; height: 220px; background: white; border-radius: 16px;
-    padding: 8px; box-shadow: 0 10px 25px rgba(0,0,0,0.04); display: flex; justify-content: center; align-items: center;
+    width: 90%; 
+    height: 260px; 
+    background: transparent; 
+    border-radius: 0;
+    padding: 0; 
+    box-shadow: none; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
 }
+.showcase-img { border-radius: 12px; }
+
 .lines-container { margin-top: 24px; text-align: center; width: 100%; }
 .fade-line {
     font-family: var(--font-serif); font-size: 1.1rem; margin-bottom: 8px;
@@ -411,14 +484,23 @@ img {
 .heart-collage-container {
     width: 100%; height: 320px; position: relative; margin-top: 20px;
 }
-/* Individual dynamic mini items inside the programmatic engine */
+/* Items floating inside the heart arrangement are also stripped down cleanly */
 .collage-item {
-    position: absolute; width: 65px; height: 65px; background: white;
-    padding: 3px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); border-radius: 4px;
-    opacity: 0; bottom: 0; left: 45%;
-    display: flex; justify-content: center; align-items: center;
+    position: absolute; 
+    width: 65px; 
+    height: 65px; 
+    background: transparent;
+    padding: 0; 
+    box-shadow: none; 
+    border-radius: 0;
+    opacity: 0; 
+    bottom: 0; 
+    left: 45%;
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
 }
-.collage-item img { border-radius: 2px; width: 100%; height: 100%; object-fit: contain; }
+.collage-item img { border-radius: 6px; width: 100%; height: 100%; object-fit: contain; }
 
 .final-overlay-content { z-index: 10; width: 100%; background: linear-gradient(to top, #fff1f3 80%, transparent); padding-top: 20px; }
 .final-quote-1 { font-family: var(--font-serif); font-size: 1.2rem; color: var(--text-muted); margin-bottom: 12px; line-height: 1.5; }
