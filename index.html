@@ -1,416 +1,444 @@
-<!DOCTYPE html>
-<html lang="en">
+Now I'll build the three files: `index.html`, `style.css`, `script.js` in `/app/` root.
+Action: file_editor create /app/index.html --file-text "<!DOCTYPE html>
+<html lang=\"en\">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>For Simran ❤️ — Happy Best Friend's Day</title>
-  <meta name="description" content="A special website for my best friend Simran on Best Friend's Day." />
-  <link rel="stylesheet" href="style.css" />
-  <!-- Google Fonts: Cormorant Garamond for headings, Lora for body, Dancing Script for handwritten feel -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Dancing+Script:wght@400;600;700&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet" />
+  <meta charset=\"UTF-8\" />
+  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, maximum-scale=5.0\" />
+  <meta name=\"theme-color\" content=\"#fdeef0\" />
+  <title>For Simran ♥ Happy Best Friend's Day</title>
+
+  <!-- Fonts: handwritten + serif for storybook feel -->
+  <link rel=\"preconnect\" href=\"https://fonts.googleapis.com\" />
+  <link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin />
+  <link
+    href=\"https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Dancing+Script:wght@500;600;700&display=swap\"
+    rel=\"stylesheet\"
+  />
+
+  <link rel=\"stylesheet\" href=\"style.css\" />
 </head>
 <body>
 
-  <!-- =============================================
-       PRELOADER
-       ============================================= -->
-  <div id="preloader">
-    <div class="preloader-inner">
-      <div class="preloader-heart">❤️</div>
-      <p class="preloader-text">Loading something special...</p>
-    </div>
-  </div>
+  <!-- ============================================================
+       FLOATING DECORATIONS  (hearts + stars float across screen)
+       Generated dynamically in script.js — don't remove .sky div
+       ============================================================ -->
+  <div class=\"sky\" id=\"sky\" aria-hidden=\"true\"></div>
 
-  <!-- =============================================
-       MUSIC TOGGLE BUTTON
-       Replace "bgm.mp3" with your audio file name
-       ============================================= -->
-  <button id="music-btn" title="Toggle music" aria-label="Toggle background music">
-    <span class="music-icon">🎵</span>
+  <!-- ============================================================
+       MUSIC TOGGLE  (visible on every chapter, top-right)
+       Replace `music.mp3` below with your own soft instrumental.
+       ============================================================ -->
+  <button class=\"music-toggle\" id=\"musicToggle\" aria-label=\"Toggle music\">
+    <span class=\"music-icon\" id=\"musicIcon\">♪</span>
   </button>
-  <!-- REPLACE: Change "bgm.mp3" to your audio filename -->
-  <audio id="bgm" loop src="bgm.mp3"></audio>
+  <!-- REPLACE: music.mp3 with your own soft instrumental track -->
+  <audio id=\"bgMusic\" loop preload=\"auto\">
+    <source src=\"music.mp3\" type=\"audio/mpeg\" />
+  </audio>
 
-  <!-- =============================================
-       SECTION 0: HERO / LANDING
-       ============================================= -->
-  <section id="hero" class="section hero-section">
+  <!-- ============================================================
+       PROGRESS BAR  (top of screen, scroll progress)
+       ============================================================ -->
+  <div class=\"progress-bar\" id=\"progressBar\"></div>
 
-    <!-- Floating dog animation (clickable easter egg) -->
-    <div class="floating-dog" id="floatingDog">🐶</div>
+  <!-- ============================================================
+       CHAPTER 1 — COVER PAGE
+       ============================================================ -->
+  <section class=\"chapter cover\" id=\"chapter-1\">
+    <div class=\"cover-gradient\"></div>
 
-    <div class="hero-content">
-      <p class="hero-pre">For My Best Friend</p>
-      <h1 class="hero-title">A little something<br />for you <span class="heart-pulse">❤️</span></h1>
-      <p class="hero-sub">Happy Best Friend's Day<br /><strong>Simran</strong></p>
+    <div class=\"cover-inner\">
+      <p class=\"cover-eyebrow\">a little memory book</p>
+      <h1 class=\"cover-title\">For Simran <span class=\"heart-inline\">♥</span></h1>
+      <h2 class=\"cover-subtitle\">Happy Best Friend's Day</h2>
 
-      <!-- Animated envelope -->
-      <div class="envelope-wrap" id="envelopeWrap" role="button" tabindex="0" aria-label="Open the letter">
-        <div class="envelope" id="envelope">
-          <div class="env-flap"></div>
-          <div class="env-body">
-            <div class="env-heart">❤️</div>
-          </div>
+      <!-- Animated Envelope -->
+      <div class=\"envelope\" id=\"envelope\" role=\"button\" tabindex=\"0\" aria-label=\"Open the letter\">
+        <div class=\"envelope-back\"></div>
+        <div class=\"envelope-letter\" id=\"letter\">
+          <p class=\"letter-line\">A story</p>
+          <p class=\"letter-line\">of us.</p>
         </div>
-        <p class="env-hint">Tap to open ↓</p>
+        <div class=\"envelope-front\"></div>
+        <div class=\"envelope-flap\" id=\"flap\"></div>
+        <div class=\"envelope-heart\">♥</div>
       </div>
-    </div>
 
-    <!-- Petal / particle background -->
-    <div class="petals" id="petals"></div>
-  </section>
-
-  <!-- =============================================
-       SECTION 1: LETTER
-       ============================================= -->
-  <section id="letter" class="section letter-section">
-    <div class="paper-bg">
-      <div class="letter-lines"></div>
-      <div class="letter-content">
-        <p class="letter-dear">Dear Simran,</p>
-        <!-- Typewriter text — edit in script.js under TYPEWRITER_LINES -->
-        <div id="typewriter-container" class="typewriter-text"></div>
-        <p class="scroll-hint" id="scrollHint" style="opacity:0">Scroll to continue ↓</p>
-      </div>
+      <button class=\"open-btn\" id=\"openStoryBtn\">Open Story</button>
+      <p class=\"scroll-hint\">scroll gently ↓</p>
     </div>
   </section>
 
-  <!-- =============================================
-       SECTION 2: THE DAY WE MET (DSN)
-       ============================================= -->
-  <section id="dsn" class="section chapter-section reveal-section">
-    <div class="chapter-label">Chapter 1</div>
-    <h2 class="section-title">The Beginning</h2>
-    <p class="section-location">📍 DSN Program</p>
+  <!-- ============================================================
+       CHAPTER 2 — THE BEGINNING
+       Photos: dsn1.jpg, dsn2.jpg, dsn3.jpg
+       ============================================================ -->
+  <section class=\"chapter beginning\" id=\"chapter-2\">
+    <div class=\"chapter-tag\">Chapter One</div>
+    <p class=\"chapter-date reveal\">April 2025</p>
+    <h2 class=\"chapter-title reveal\">The Day We Met</h2>
 
-    <!-- PHOTO CAROUSEL — Replace filenames below -->
-    <div class="carousel" id="dsnCarousel">
-      <div class="carousel-track" id="dsnTrack">
-        <!-- REPLACE: dsn1.jpg, dsn2.jpg, dsn3.jpg with your actual photos -->
-        <div class="carousel-slide"><img src="dsn1.jpg" alt="DSN Memory 1" loading="lazy" /></div>
-        <div class="carousel-slide"><img src="dsn2.jpg" alt="DSN Memory 2" loading="lazy" /></div>
-        <div class="carousel-slide"><img src="dsn3.jpg" alt="DSN Memory 3" loading="lazy" /></div>
-      </div>
-      <button class="carousel-btn prev" onclick="slideCarousel('dsnTrack', -1)">‹</button>
-      <button class="carousel-btn next" onclick="slideCarousel('dsnTrack', 1)">›</button>
-      <div class="carousel-dots" id="dsnDots"></div>
+    <div class=\"scrapbook\">
+      <!-- REPLACE: dsn1.jpg -->
+      <figure class=\"scrap scrap-tilt-left reveal\">
+        <img src=\"dsn1.jpg\" alt=\"At DSN — first memory\" loading=\"lazy\" />
+        <figcaption>DSN · day one</figcaption>
+      </figure>
+
+      <!-- REPLACE: dsn2.jpg -->
+      <figure class=\"scrap scrap-tilt-right reveal\">
+        <img src=\"dsn2.jpg\" alt=\"At DSN — together\" loading=\"lazy\" />
+        <figcaption>us, beginning</figcaption>
+      </figure>
+
+      <!-- REPLACE: dsn3.jpg -->
+      <figure class=\"scrap scrap-tilt-left reveal\">
+        <img src=\"dsn3.jpg\" alt=\"At DSN — moments\" loading=\"lazy\" />
+        <figcaption>strangers → friends</figcaption>
+      </figure>
     </div>
 
-    <div class="story-card">
-      <p>We met for the first time during DSN. At that time, we were just two people attending the same program.</p>
-      <p>Little did we know that this friendship would become such an important part of our lives.</p>
-    </div>
-  </section>
-
-  <!-- =============================================
-       SECTION 3: THE DOG STORY
-       ============================================= -->
-  <section id="dogstory" class="section dog-section reveal-section">
-    <div class="dog-float-big">🐶</div>
-    <h2 class="section-title">The Dog Incident 🐶</h2>
-
-    <div class="comic-layout">
-      <div class="comic-panel">
-        <!-- REPLACE: dog-memory.jpg with your actual photo -->
-        <img src="dog-memory.jpg" alt="The dog incident" loading="lazy" class="comic-img" />
-        <div class="comic-bubble">*Simran has entered panic mode* 😂</div>
-      </div>
-      <div class="comic-text">
-        <p>Among all the memories from DSN, one thing I can never forget is how scared you were of dogs.</p>
-        <p>And somehow I became your <em>unofficial dog protection service</em>. 🛡️</p>
-      </div>
-    </div>
-
-    <div class="dog-paw-trail">
-      <span>🐾</span><span>🐾</span><span>🐾</span><span>🐾</span><span>🐾</span>
+    <div class=\"story-block reveal\">
+      <p>We met at <em>DSN</em>.</p>
+      <p>Neither of us knew where this journey would lead.</p>
     </div>
   </section>
 
-  <!-- =============================================
-       SECTION 4: FOOD & CONVERSATIONS
-       ============================================= -->
-  <section id="food" class="section food-section reveal-section">
-    <h2 class="section-title">Food &amp; Conversations</h2>
+  <!-- ============================================================
+       CHAPTER 3 — THE DOG STORY
+       Photos: dog1.jpg, dog2.jpg
+       ============================================================ -->
+  <section class=\"chapter dog-story\" id=\"chapter-3\">
+    <div class=\"chapter-tag\">Chapter Two</div>
+    <h2 class=\"chapter-title reveal\">The Dog Chapter <span class=\"emoji\">🐶</span></h2>
 
-    <!-- POLAROID GALLERY — Replace filenames below -->
-    <div class="polaroid-gallery">
-      <!-- REPLACE: food1.jpg, food2.jpg, food3.jpg -->
-      <div class="polaroid tilt-left">
-        <img src="food1.jpg" alt="Food Memory 1" loading="lazy" />
-        <p class="polaroid-caption">Good food, better company</p>
-      </div>
-      <div class="polaroid tilt-right">
-        <img src="food2.jpg" alt="Food Memory 2" loading="lazy" />
-        <p class="polaroid-caption">Every meal, a memory</p>
-      </div>
-      <div class="polaroid tilt-slight">
-        <img src="food3.jpg" alt="Food Memory 3" loading="lazy" />
-        <p class="polaroid-caption">Worth every calorie 😋</p>
-      </div>
+    <div class=\"dog-grid\">
+      <!-- REPLACE: dog1.jpg -->
+      <figure class=\"polaroid polaroid-pop reveal\">
+        <img src=\"dog1.jpg\" alt=\"The dog encounter\" loading=\"lazy\" />
+        <figcaption>“not again…”</figcaption>
+      </figure>
+
+      <!-- REPLACE: dog2.jpg -->
+      <figure class=\"polaroid polaroid-pop reveal\">
+        <img src=\"dog2.jpg\" alt=\"Walking past dogs\" loading=\"lazy\" />
+        <figcaption>security mode: on</figcaption>
+      </figure>
     </div>
 
-    <div class="story-card centered">
-      <p>Some friendships grow through grand moments.</p>
-      <p>Ours grew through shared meals, endless conversations, roasting each other, and countless little memories.</p>
-    </div>
-  </section>
-
-  <!-- =============================================
-       SECTION 5: LAST DAY OF DSN
-       ============================================= -->
-  <section id="lastday" class="section lastday-section reveal-section">
-    <div class="stars-bg" id="starsBg"></div>
-    <div class="lastday-content">
-      <h2 class="section-title light">The Last Day</h2>
-
-      <!-- REPLACE: lastday1.jpg, lastday2.jpg -->
-      <div class="lastday-gallery">
-        <div class="lastday-img-wrap">
-          <img src="lastday1.jpg" alt="Last Day Memory 1" loading="lazy" />
-        </div>
-        <div class="lastday-img-wrap">
-          <img src="lastday2.jpg" alt="Last Day Memory 2" loading="lazy" />
-        </div>
-      </div>
-
-      <div class="lastday-text" id="lastdayText">
-        <p class="reveal-line">Then came the final day.</p>
-        <p class="reveal-line">The day we had to leave.</p>
-        <p class="reveal-line highlight">And that day it felt like I was a completely new person...<br />much much much happy.</p>
-        <div class="pause-dots">· · ·</div>
-        <p class="reveal-line">We laughed.</p>
-        <p class="reveal-line">We cried.</p>
-        <p class="reveal-line">And somewhere in that goodbye,<br />a lifelong friendship began.</p>
-      </div>
+    <div class=\"story-block playful reveal\">
+      <p>You feared dogs.</p>
+      <p>I became <span class=\"highlight\">security</span>.</p>
     </div>
   </section>
 
-  <!-- =============================================
-       SECTION 6: SANGAM & STATION
-       ============================================= -->
-  <section id="sangam" class="section sangam-section reveal-section">
-    <h2 class="section-title">One Last Ride</h2>
+  <!-- ============================================================
+       CHAPTER 4 — THE LITTLE MOMENTS
+       Photos: food1.jpg, food2.jpg, food3.jpg
+       ============================================================ -->
+  <section class=\"chapter little-moments\" id=\"chapter-4\">
+    <div class=\"chapter-tag\">Chapter Three</div>
+    <h2 class=\"chapter-title reveal\">The Little Moments</h2>
 
-    <!-- Journey timeline -->
-    <div class="journey-timeline">
-      <div class="timeline-node">
-        <div class="node-dot"></div>
-        <span class="node-label">DSN</span>
-      </div>
-      <div class="timeline-path">
-        <div class="scooter-icon" id="scooterIcon">🛵</div>
-      </div>
-      <div class="timeline-node">
-        <div class="node-dot"></div>
-        <span class="node-label">Sangam</span>
-      </div>
-      <div class="timeline-path">
-        <div class="scooter-icon-2">🚗</div>
-      </div>
-      <div class="timeline-node">
-        <div class="node-dot active"></div>
-        <span class="node-label">Railway Station 🚂</span>
-      </div>
-    </div>
+    <div class=\"polaroid-stack\">
+      <!-- REPLACE: food1.jpg -->
+      <figure class=\"polaroid tape-top reveal\">
+        <img src=\"food1.jpg\" alt=\"Meals together\" loading=\"lazy\" />
+        <figcaption>Meals.</figcaption>
+      </figure>
 
-    <!-- REPLACE: sangam1.jpg, sangam2.jpg -->
-    <div class="sangam-gallery">
-      <img src="sangam1.jpg" alt="Sangam Memory 1" loading="lazy" class="sangam-img" />
-      <img src="sangam2.jpg" alt="Sangam Memory 2" loading="lazy" class="sangam-img" />
-    </div>
+      <!-- REPLACE: food2.jpg -->
+      <figure class=\"polaroid tape-side reveal\">
+        <img src=\"food2.jpg\" alt=\"Stories shared\" loading=\"lazy\" />
+        <figcaption>Stories.</figcaption>
+      </figure>
 
-    <div class="story-card centered">
-      <p>One final ride.</p>
-      <p>One final visit.</p>
-      <p>One final memory before the train left.</p>
+      <!-- REPLACE: food3.jpg -->
+      <figure class=\"polaroid tape-top reveal\">
+        <img src=\"food3.jpg\" alt=\"Laughter\" loading=\"lazy\" />
+        <figcaption>Laughter.</figcaption>
+      </figure>
     </div>
   </section>
 
-  <!-- =============================================
-       SECTION 7: THE CALLS
-       ============================================= -->
-  <section id="calls" class="section calls-section reveal-section">
-    <div class="stars-bg" id="starsBg2"></div>
-    <div class="calls-content">
-      <h2 class="section-title light">The Calls 📞</h2>
+  <!-- ============================================================
+       CHAPTER 5 — THE LAST DAY
+       Photos: lastday1.jpg, lastday2.jpg
+       ============================================================ -->
+  <section class=\"chapter last-day\" id=\"chapter-5\">
+    <div class=\"stars\" id=\"stars\" aria-hidden=\"true\"></div>
+    <div class=\"chapter-tag light\">Chapter Four</div>
+    <h2 class=\"chapter-title light reveal\">The Last Day</h2>
 
-      <!-- Animated call bubbles -->
-      <div class="call-bubbles">
-        <div class="call-log incoming">📱 Simran calling... <span class="call-dur">2h 14m</span></div>
-        <div class="call-log outgoing">You → Simran <span class="call-dur">1h 48m</span></div>
-        <div class="call-log incoming">📱 Simran calling... <span class="call-dur">3h 02m</span></div>
-        <div class="call-log outgoing">You → Simran <span class="call-dur">45m</span></div>
-        <div class="call-log incoming">📱 Simran calling... <span class="call-dur">1h 33m</span></div>
-      </div>
+    <div class=\"dual-frame\">
+      <!-- REPLACE: lastday1.jpg -->
+      <figure class=\"frame dark reveal\">
+        <img src=\"lastday1.jpg\" alt=\"The last day together\" loading=\"lazy\" />
+      </figure>
 
-      <div class="calls-text">
-        <p>Distance never became a problem.</p>
-        <p>Hours turned into conversations.</p>
-        <p>Conversations turned into memories.</p>
-        <p>And memories turned into a friendship that kept growing stronger.</p>
-      </div>
+      <!-- REPLACE: lastday2.jpg -->
+      <figure class=\"frame dark reveal\">
+        <img src=\"lastday2.jpg\" alt=\"Goodbye, for now\" loading=\"lazy\" />
+      </figure>
+    </div>
+
+    <div class=\"story-block light reveal\">
+      <p>Then came goodbye.</p>
+      <p class=\"soft\">But not the end.</p>
     </div>
   </section>
 
-  <!-- =============================================
-       SECTION 8: LUCKNOW
-       ============================================= -->
-  <section id="lucknow" class="section lucknow-section reveal-section">
-    <div class="travel-stamp">Lucknow</div>
-    <h2 class="section-title">Lucknow Memories ✈️</h2>
+  <!-- ============================================================
+       CHAPTER 6 — THE RIDE  (DSN → Sangam → Station)
+       Photos: sangam1.jpg, sangam2.jpg
+       ============================================================ -->
+  <section class=\"chapter the-ride\" id=\"chapter-6\">
+    <div class=\"chapter-tag\">Chapter Five</div>
+    <h2 class=\"chapter-title reveal\">The Ride</h2>
 
-    <!-- REPLACE: lucknow1.jpg, lucknow2.jpg, lucknow3.jpg, lucknow4.jpg -->
-    <div class="travel-grid">
-      <div class="travel-card tilt-left">
-        <img src="lucknow1.jpg" alt="Lucknow Memory 1" loading="lazy" />
-      </div>
-      <div class="travel-card tilt-right">
-        <img src="lucknow2.jpg" alt="Lucknow Memory 2" loading="lazy" />
-      </div>
-      <div class="travel-card tilt-slight">
-        <img src="lucknow3.jpg" alt="Lucknow Memory 3" loading="lazy" />
-      </div>
-      <div class="travel-card tilt-left">
-        <img src="lucknow4.jpg" alt="Lucknow Memory 4" loading="lazy" />
-      </div>
+    <div class=\"ride-timeline reveal\">
+      <div class=\"ride-node\"><span>DSN</span></div>
+      <div class=\"ride-line\"></div>
+      <div class=\"ride-node active\"><span>Sangam</span></div>
+      <div class=\"ride-line\"></div>
+      <div class=\"ride-node\"><span>Station</span></div>
     </div>
 
-    <div class="story-card centered">
-      <p>Then came Lucknow.</p>
+    <div class=\"ride-photos\">
+      <!-- REPLACE: sangam1.jpg -->
+      <figure class=\"scrap scrap-tilt-right reveal\">
+        <img src=\"sangam1.jpg\" alt=\"At Sangam\" loading=\"lazy\" />
+        <figcaption>sangam · together</figcaption>
+      </figure>
+
+      <!-- REPLACE: sangam2.jpg -->
+      <figure class=\"scrap scrap-tilt-left reveal\">
+        <img src=\"sangam2.jpg\" alt=\"At Sangam again\" loading=\"lazy\" />
+        <figcaption>one more ride</figcaption>
+      </figure>
+    </div>
+
+    <div class=\"story-block reveal\">
+      <p>One more ride.</p>
+      <p>One more memory.</p>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       CHAPTER 7 — THE STATION
+       Photos: station1.jpg, station2.jpg
+       ============================================================ -->
+  <section class=\"chapter station\" id=\"chapter-7\">
+    <div class=\"chapter-tag\">Chapter Six</div>
+    <h2 class=\"chapter-title reveal\">The Station</h2>
+
+    <div class=\"dual-frame\">
+      <!-- REPLACE: station1.jpg -->
+      <figure class=\"frame reveal\">
+        <img src=\"station1.jpg\" alt=\"At the station\" loading=\"lazy\" />
+      </figure>
+
+      <!-- REPLACE: station2.jpg -->
+      <figure class=\"frame reveal\">
+        <img src=\"station2.jpg\" alt=\"Saying goodbye\" loading=\"lazy\" />
+      </figure>
+    </div>
+
+    <div class=\"story-block reveal\">
+      <p class=\"big-line\">See you soon.</p>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       CHAPTER 8 — THE CALLS
+       Photos: call1.jpg, call2.jpg, call3.jpg
+       ============================================================ -->
+  <section class=\"chapter calls\" id=\"chapter-8\">
+    <div class=\"night-sky\" id=\"nightSky\" aria-hidden=\"true\"></div>
+    <div class=\"chapter-tag light\">Chapter Seven</div>
+    <h2 class=\"chapter-title light reveal\">The Calls</h2>
+
+    <div class=\"calls-grid\">
+      <!-- REPLACE: call1.jpg -->
+      <figure class=\"phone-frame reveal\">
+        <img src=\"call1.jpg\" alt=\"Late-night call screenshot\" loading=\"lazy\" />
+      </figure>
+
+      <!-- REPLACE: call2.jpg -->
+      <figure class=\"phone-frame reveal\">
+        <img src=\"call2.jpg\" alt=\"Long talks\" loading=\"lazy\" />
+      </figure>
+
+      <!-- REPLACE: call3.jpg -->
+      <figure class=\"phone-frame reveal\">
+        <img src=\"call3.jpg\" alt=\"Endless conversations\" loading=\"lazy\" />
+      </figure>
+    </div>
+
+    <div class=\"story-block light reveal\">
+      <p>Distance changed.</p>
+      <p class=\"soft\">Friendship didn't.</p>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       CHAPTER 9 — LUCKNOW
+       Photos: lucknow1.jpg, lucknow2.jpg, lucknow3.jpg, lucknow4.jpg
+       ============================================================ -->
+  <section class=\"chapter lucknow\" id=\"chapter-9\">
+    <div class=\"chapter-tag\">Chapter Eight</div>
+    <h2 class=\"chapter-title reveal\">Lucknow</h2>
+    <p class=\"chapter-sub reveal\">a travel diary</p>
+
+    <div class=\"travel-diary\">
+      <!-- REPLACE: lucknow1.jpg -->
+      <figure class=\"diary-card reveal\">
+        <img src=\"lucknow1.jpg\" alt=\"Lucknow streets\" loading=\"lazy\" />
+        <figcaption>day 01</figcaption>
+      </figure>
+
+      <!-- REPLACE: lucknow2.jpg -->
+      <figure class=\"diary-card reveal\">
+        <img src=\"lucknow2.jpg\" alt=\"Lucknow food\" loading=\"lazy\" />
+        <figcaption>day 02</figcaption>
+      </figure>
+
+      <!-- REPLACE: lucknow3.jpg -->
+      <figure class=\"diary-card reveal\">
+        <img src=\"lucknow3.jpg\" alt=\"Lucknow sights\" loading=\"lazy\" />
+        <figcaption>day 03</figcaption>
+      </figure>
+
+      <!-- REPLACE: lucknow4.jpg -->
+      <figure class=\"diary-card reveal\">
+        <img src=\"lucknow4.jpg\" alt=\"Lucknow goodbye\" loading=\"lazy\" />
+        <figcaption>day 04</figcaption>
+      </figure>
+    </div>
+
+    <div class=\"story-block reveal\">
+      <p>Lucknow.</p>
       <p>More adventures.</p>
-      <p>More laughter.</p>
-      <p>More stories to remember.</p>
     </div>
   </section>
 
-  <!-- =============================================
-       SECTION 9: BANGALORE ASHRAM
-       ============================================= -->
-  <section id="bangalore" class="section bangalore-section reveal-section">
-    <h2 class="section-title">Bangalore Ashram 🙏</h2>
+  <!-- ============================================================
+       CHAPTER 10 — BANGALORE ASHRAM
+       Photos: bangalore1.jpg, bangalore2.jpg, bangalore3.jpg
+       ============================================================ -->
+  <section class=\"chapter bangalore\" id=\"chapter-10\">
+    <div class=\"chapter-tag\">Chapter Nine</div>
+    <h2 class=\"chapter-title reveal\">Bangalore Ashram</h2>
 
-    <!-- REPLACE: bangalore1.jpg, bangalore2.jpg, bangalore3.jpg -->
-    <div class="bangalore-gallery">
-      <img src="bangalore1.jpg" alt="Bangalore Memory 1" loading="lazy" class="bl-img" />
-      <img src="bangalore2.jpg" alt="Bangalore Memory 2" loading="lazy" class="bl-img center-img" />
-      <img src="bangalore3.jpg" alt="Bangalore Memory 3" loading="lazy" class="bl-img" />
+    <div class=\"peaceful-grid\">
+      <!-- REPLACE: bangalore1.jpg -->
+      <figure class=\"soft-frame reveal\">
+        <img src=\"bangalore1.jpg\" alt=\"At the ashram\" loading=\"lazy\" />
+      </figure>
+
+      <!-- REPLACE: bangalore2.jpg -->
+      <figure class=\"soft-frame reveal\">
+        <img src=\"bangalore2.jpg\" alt=\"Peaceful moments\" loading=\"lazy\" />
+      </figure>
+
+      <!-- REPLACE: bangalore3.jpg -->
+      <figure class=\"soft-frame reveal\">
+        <img src=\"bangalore3.jpg\" alt=\"Together in stillness\" loading=\"lazy\" />
+      </figure>
     </div>
 
-    <div class="story-card serene">
-      <p>There was a time when I wasn't sure I could make this trip.</p>
-      <p>Plans were uncertain.</p>
-      <p>But you and Sunidhi kept encouraging me.</p>
-      <p>Because of you both, I got to experience something I would never want to miss.</p>
-    </div>
-  </section>
-
-  <!-- =============================================
-       SECTION 10: WHAT CHANGED
-       ============================================= -->
-  <section id="changed" class="section changed-section reveal-section">
-    <h2 class="section-title">What Changed</h2>
-
-    <!-- REPLACE: change.jpg -->
-    <div class="change-img-wrap">
-      <img src="change.jpg" alt="What Changed" loading="lazy" class="change-img" />
-    </div>
-
-    <div class="change-lines" id="changeLines">
-      <p class="change-line" data-delay="0">After meeting you...</p>
-      <p class="change-line" data-delay="400">I smiled more.</p>
-      <p class="change-line" data-delay="800">I laughed more.</p>
-      <p class="change-line" data-delay="1200">I worried less.</p>
-      <p class="change-line" data-delay="1600">And life became a little brighter. ✨</p>
+    <div class=\"story-block reveal\">
+      <p>You believed in me.</p>
+      <p class=\"soft\">Thank you.</p>
     </div>
   </section>
 
-  <!-- =============================================
-       SECTION 11: FRIENDSHIP STATS
-       ============================================= -->
-  <section id="stats" class="section stats-section reveal-section">
-    <h2 class="section-title">Us, in Numbers</h2>
+  <!-- ============================================================
+       CHAPTER 11 — WHAT CHANGED
+       One powerful photo: changed.jpg
+       ============================================================ -->
+  <section class=\"chapter what-changed\" id=\"chapter-11\">
+    <div class=\"chapter-tag\">Chapter Ten</div>
+    <h2 class=\"chapter-title reveal\">What Changed</h2>
 
-    <!-- EDIT STATS: Update these numbers in script.js under FRIENDSHIP_STATS -->
-    <div class="stats-grid">
-      <div class="stat-card">
-        <div class="stat-num" data-target="365" data-suffix="+">0</div>
-        <div class="stat-label">Days of Friendship</div>
-        <div class="stat-icon">📅</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-num" data-target="4" data-suffix="">0</div>
-        <div class="stat-label">Trips Together</div>
-        <div class="stat-icon">✈️</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-num" data-target="200" data-suffix="+">0</div>
-        <div class="stat-label">Hours of Calls</div>
-        <div class="stat-icon">📞</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-num" data-target="500" data-suffix="+">0</div>
-        <div class="stat-label">Photos Shared</div>
-        <div class="stat-icon">📸</div>
-      </div>
+    <!-- REPLACE: changed.jpg  (one powerful photo of you & Simran) -->
+    <figure class=\"hero-frame reveal\">
+      <img src=\"changed.jpg\" alt=\"A moment that changed everything\" loading=\"lazy\" />
+    </figure>
+
+    <div class=\"lines-reveal\">
+      <p class=\"line\">After meeting you…</p>
+      <p class=\"line\">I smiled more.</p>
+      <p class=\"line\">I laughed more.</p>
+      <p class=\"line\">I worried less.</p>
+      <p class=\"line big\">And life became brighter.</p>
     </div>
   </section>
 
-  <!-- =============================================
-       SECTION 12: FINAL LETTER
-       ============================================= -->
-  <section id="finalletter" class="section finalletter-section reveal-section">
-    <div class="final-envelope-wrap">
-      <div class="final-envelope" id="finalEnvelope" role="button" tabindex="0" aria-label="Open final letter">
-        <div class="final-env-flap"></div>
-        <div class="final-env-body">
-          <div class="final-env-label">For Simran ❤️</div>
-        </div>
-      </div>
-      <p class="env-hint">Tap to read ↓</p>
-    </div>
+  <!-- ============================================================
+       CHAPTER 12 — MEMORY TIMELINE
+       ============================================================ -->
+  <section class=\"chapter timeline-chapter\" id=\"chapter-12\">
+    <div class=\"chapter-tag\">Chapter Eleven</div>
+    <h2 class=\"chapter-title reveal\">Our Timeline</h2>
 
-    <div class="final-letter-paper" id="finalLetterPaper" style="display:none">
-      <div class="paper-texture">
-        <p class="final-dear">Dear Simran,</p>
-        <p>Thank you for every conversation.</p>
-        <p>Thank you for every memory.</p>
-        <p>Thank you for every laugh.</p>
-        <p>Thank you for always being there.</p>
-        <br />
-        <p>Our journey started with tears, and that's what makes it so special. From that emotional beginning at DSN to all the memories we've created since, this friendship has become one of the most precious parts of our life.</p>
-        <br />
-        <p class="final-sign">Happy Best Friend's Day ❤️</p>
-        <p class="final-name">— Your friend, always.</p>
-      </div>
+    <div class=\"timeline\">
+      <div class=\"thread\"></div>
+      <div class=\"t-node reveal\"><span class=\"dot\"></span><div class=\"t-card\"><h4>DSN</h4><p>where it began</p></div></div>
+      <div class=\"t-node reveal right\"><span class=\"dot\"></span><div class=\"t-card\"><h4>The Dog Story</h4><p>laughter on repeat</p></div></div>
+      <div class=\"t-node reveal\"><span class=\"dot\"></span><div class=\"t-card\"><h4>Sangam</h4><p>one more ride</p></div></div>
+      <div class=\"t-node reveal right\"><span class=\"dot\"></span><div class=\"t-card\"><h4>The Station</h4><p>see you soon</p></div></div>
+      <div class=\"t-node reveal\"><span class=\"dot\"></span><div class=\"t-card\"><h4>The Calls</h4><p>distance, no distance</p></div></div>
+      <div class=\"t-node reveal right\"><span class=\"dot\"></span><div class=\"t-card\"><h4>Lucknow</h4><p>new streets, old friend</p></div></div>
+      <div class=\"t-node reveal\"><span class=\"dot\"></span><div class=\"t-card\"><h4>Bangalore</h4><p>stillness, together</p></div></div>
     </div>
   </section>
 
-  <!-- =============================================
-       FINAL ANIMATION: HEART COLLAGE
-       ============================================= -->
-  <section id="finale" class="section finale-section">
-    <div class="finale-content">
-      <div class="heart-collage" id="heartCollage">
-        <!-- Photos float up to form a heart — positions set by JS -->
-        <!-- REPLACE: Add your most special photo filenames here -->
-        <!-- These are used in the finale collage; edit the array in script.js under COLLAGE_PHOTOS -->
-        <div class="collage-photos" id="collagePhotos"></div>
-        <div class="heart-outline">❤️</div>
-      </div>
+  <!-- ============================================================
+       CHAPTER 13 — FINAL LETTER
+       ============================================================ -->
+  <section class=\"chapter final-letter\" id=\"chapter-13\">
+    <div class=\"chapter-tag\">Chapter Twelve</div>
+    <h2 class=\"chapter-title reveal\">A Letter For You</h2>
 
-      <div class="finale-text">
-        <p class="finale-line">"DSN was where we met.</p>
-        <p class="finale-line">Friendship is what stayed."</p>
-        <br />
-        <p class="finale-main">Happy Best Friend's Day<br /><strong>Simran ❤️</strong></p>
-      </div>
-
-      <button class="replay-btn" onclick="replayJourney()">🔁 Replay Journey</button>
+    <div class=\"letter-paper reveal\" id=\"letterPaper\">
+      <p>Dear Simran,</p>
+      <p>Thank you for every conversation.</p>
+      <p>Thank you for every memory.</p>
+      <p>Thank you for every laugh.</p>
+      <p>Thank you for always being there.</p>
+      <p>From DSN to today, this friendship has become one of the most precious parts of my life.</p>
+      <p class=\"letter-sign\">Happy Best Friend's Day <span class=\"heart-inline\">♥</span></p>
     </div>
   </section>
 
-  <script src="script.js"></script>
+  <!-- ============================================================
+       FINAL CHAPTER — HEART COLLAGE
+       Uses photos floating into a heart shape
+       ============================================================ -->
+  <section class=\"chapter heart-finale\" id=\"chapter-14\">
+    <div class=\"chapter-tag\">Finale</div>
+
+    <div class=\"heart-collage\" id=\"heartCollage\" aria-label=\"Memories forming a heart\">
+      <!-- Photos populated by script.js into heart shape; uses your uploaded images -->
+    </div>
+
+    <div class=\"finale-text reveal\">
+      <p>DSN was where we met.</p>
+      <p>Friendship is what stayed.</p>
+      <p class=\"big-line\">Happy Best Friend's Day <span class=\"heart-inline\">♥</span></p>
+    </div>
+
+    <button class=\"replay-btn\" id=\"replayBtn\">Replay Journey</button>
+
+    <footer class=\"footer\">
+      <p>made with love · <span class=\"heart-inline\">♥</span></p>
+    </footer>
+  </section>
+
+  <script src=\"script.js\"></script>
 </body>
 </html>
+"
+Observation: Create successful: /app/index.html
