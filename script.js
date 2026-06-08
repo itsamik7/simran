@@ -26,20 +26,29 @@ const ALL_MEMORIES = [
 
 /**
  * ==========================================================================
- * PRELOADER & INITIALIZATION
+ * PRELOADER & INITIALIZATION (FORCED SAFE DISMISSAL)
  * ==========================================================================
  */
-window.addEventListener('DOMContentLoaded', () => {
-    // Hide Preloader once basic components load up safely
-    setTimeout(() => {
-        const preloader = document.getElementById('preloader');
-        if (preloader) {
-            preloader.style.opacity = '0';
-            preloader.style.transition = 'opacity 0.5s ease';
-            setTimeout(() => preloader.style.display = 'none', 500);
-        }
-    }, 1200);
+function dismissPreloader() {
+    const preloader = document.getElementById('preloader');
+    if (preloader && preloader.style.display !== 'none') {
+        preloader.style.opacity = '0';
+        preloader.style.transition = 'opacity 0.4s ease';
+        setTimeout(() => {
+            preloader.style.display = 'none';
+        }, 400);
+    }
+}
 
+// Guarantee preloader hides even if asset loading delays or hits strict device policy walls
+window.addEventListener('load', () => {
+    setTimeout(dismissPreloader, 600);
+});
+
+// Secondary fallback backup timer
+setTimeout(dismissPreloader, 1500);
+
+window.addEventListener('DOMContentLoaded', () => {
     initEnvelope();
     initScrollAnimations();
     initCarousel();
@@ -65,7 +74,6 @@ function initAudioController() {
                 musicBtn.classList.add('playing');
             }).catch(err => {
                 console.log("Audio play blocked by device policies:", err);
-                // Secondary fallback attempt for strict mobile browsers
                 audio.muted = false;
                 audio.play();
                 musicBtn.classList.add('playing');
@@ -92,15 +100,13 @@ function initEnvelope() {
         if (!envelope.classList.contains('open')) {
             envelope.classList.add('open');
             
-            // Wait for envelope layout animations to naturally breathe, then scroll down
             setTimeout(() => {
                 if (sec1) {
                     sec1.classList.add('visible-section');
                     sec1.scrollIntoView({ behavior: 'smooth' });
                 }
-                // Trigger the emotional typewriter typewriter execution sequence
                 startTypewriter();
-            }, 1200);
+            }, 1000);
         }
     });
 }
@@ -124,16 +130,15 @@ function startTypewriter() {
                 container.innerHTML += char;
             }
             idx++;
-            setTimeout(type, 45); // Comfortable reading cadence
+            setTimeout(type, 45);
         } else {
-            // Unveil navigation indicator smoothly once finished typing
             if(prompt) {
                 prompt.classList.remove('hidden');
                 prompt.style.opacity = '1';
             }
         }
     }
-    setTimeout(type, 400);
+    setTimeout(type, 200);
 }
 
 /**
@@ -154,7 +159,7 @@ function initCarousel() {
         
         dots.forEach(d => d.classList.remove('active'));
         dots[currentSlide].classList.add('active');
-    }, 3000); // 3-second picture swap cycle
+    }, 3000);
 }
 
 /**
@@ -168,7 +173,7 @@ function initScrollAnimations() {
     const observerOptions = {
         root: null,
         rootMargin: '0px',
-        threshold: 0.05 // FIXED: Lowered threshold so compact sections trigger instantly on mobile!
+        threshold: 0.02
     };
 
     const scrollObserver = new IntersectionObserver((entries, observer) => {
@@ -177,7 +182,6 @@ function initScrollAnimations() {
                 const target = entry.target;
                 target.classList.add('visible-section');
 
-                // Lazy loading heavy PNG assets contained within target block
                 const lazyImgs = target.querySelectorAll('.lazy-img');
                 lazyImgs.forEach(img => {
                     if(img.dataset.src && !img.classList.contains('loaded')) {
@@ -186,7 +190,6 @@ function initScrollAnimations() {
                     }
                 });
 
-                // Contextual Component Animators
                 if(target.id === 'section6') {
                     const scooter = document.getElementById('scooter');
                     if(scooter) scooter.style.left = '85%';
@@ -205,7 +208,7 @@ function initScrollAnimations() {
                     buildHeartCollage();
                 }
 
-                observer.unobserve(target); // Memory optimization safeguard
+                observer.unobserve(target);
             }
         });
     }, observerOptions);
@@ -224,11 +227,11 @@ function runCounters() {
         const type = counter.dataset.target;
         const finalValue = CONFIG_STATS[type] || 0;
         let start = 0;
-        const duration = 1500; // Total count acceleration speed window
+        const duration = 1500;
         const stepTime = Math.max(Math.floor(duration / finalValue), 15);
         
         const timer = setInterval(() => {
-            start += Math.ceil(finalValue / 40); // Natural visual acceleration steps
+            start += Math.ceil(finalValue / 40);
             if (start >= finalValue) {
                 counter.innerText = finalValue + (type === 'photos' || type === 'calls' ? '+' : '');
                 clearInterval(timer);
@@ -242,7 +245,6 @@ function runCounters() {
 /**
  * ==========================================================================
  * FINAL MATRICULATED HEART-SHAPED COLLAGE ALGORITHM
- * Arranges photos into a heart layout without aspect distortion or truncation.
  * ==========================================================================
  */
 function buildHeartCollage() {
@@ -252,7 +254,6 @@ function buildHeartCollage() {
     const containerWidth = container.offsetWidth || 340;
     const containerHeight = container.offsetHeight || 320;
     
-    // Mathematical relative point distribution mapping standard cardioid trajectories
     const heartPoints = [
         {x: 0.5,  y: 0.22}, {x: 0.32, y: 0.12}, {x: 0.68, y: 0.12},
         {x: 0.15, y: 0.22}, {x: 0.85, y: 0.22}, {x: 0.11, y: 0.40},
@@ -263,23 +264,21 @@ function buildHeartCollage() {
     ];
 
     ALL_MEMORIES.forEach((imgSrc, index) => {
-        if(index >= heartPoints.length) return; // Keep rendering bounded within safety coordinate count
+        if(index >= heartPoints.length) return;
 
         const item = document.createElement('div');
         item.classList.add('collage-item');
         
         const img = document.createElement('img');
-        img.src = imgSrc; // Load up immediate asset instance
+        img.src = imgSrc;
         item.appendChild(img);
         
-        // Random rotational slight offsets mirroring traditional physical scrapbooks
         const randomRotation = Math.floor(Math.random() * 24) - 12; 
         
         container.appendChild(item);
 
-        // Micro timed sequence intervals executing the float up animation frame
         setTimeout(() => {
-            const targetX = heartPoints[index].x * containerWidth - 32; // Centering item dimensions offset
+            const targetX = heartPoints[index].x * containerWidth - 32;
             const targetY = heartPoints[index].y * containerHeight - 32;
 
             item.style.transition = 'all 1.6s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
@@ -287,18 +286,13 @@ function buildHeartCollage() {
             item.style.left = `${targetX}px`;
             item.style.top = `${targetY}px`;
             item.style.transform = `rotate(${randomRotation}deg)`;
-        }, index * 150); // Progressive stack sequencing flow
+        }, index * 120);
     });
 }
 
-/**
- * ==========================================================================
- * JOURNEY RESET MECHANISM
- * ==========================================================================
- */
 document.getElementById('replayBtn')?.addEventListener('click', () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
     setTimeout(() => {
-        window.location.reload(); // Refresh viewport sequence safely
-    }, 800);
+        window.location.reload();
+    }, 600);
 });
