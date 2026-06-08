@@ -42,11 +42,12 @@ body {
 }
 
 /* ==========================================================================
-   COMPONENTS & UTILITIES
+   COMPONENTS & UTILITIES (UPDATED: FRAMELESS + COMPACT VIEWPORTS)
    ========================================================================== */
 .section {
-    min-height: 100vh;
-    padding: 40px 24px;
+    /* Tightens vertical spacing between chapters instead of forcing full-screen gaps */
+    min-height: auto;
+    padding: 30px 24px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -55,15 +56,21 @@ body {
     overflow: hidden;
 }
 
+/* Keeps the landing envelope section full-screen so it opens like a book cover */
+.landing-section {
+    min-height: 100vh !important;
+}
+
 .dark-section {
     background: var(--dark-bg) !important;
     color: #f0f4ff;
+    padding: 50px 24px; /* Slight extra padding for starry backdrop breathing room */
 }
 
 .hidden-section {
     opacity: 0;
-    transform: translateY(40px);
-    transition: opacity 0.9s ease, transform 0.9s ease;
+    transform: translateY(20px); /* Tighter slide up for cleaner mobile tracking */
+    transition: opacity 0.6s ease, transform 0.6s ease;
 }
 
 .visible-section {
@@ -71,11 +78,8 @@ body {
     transform: translateY(0);
 }
 
-/* IMAGE PROTECTION RULE:
-   - Changed object-fit to 'contain' globally.
-   - Max width and height ensure images sit completely loose and organic, 
-     matching their true structural boundaries without clipping edges.
-*/
+/* ZERO-CROP PHOTO ASSURANCE: 
+   Images retain natural dimensions completely independent of borders/frames */
 img {
     width: 100%;
     height: 100%;
@@ -88,7 +92,7 @@ img {
     background: var(--card-bg);
     border-radius: 16px;
     padding: 20px;
-    margin-top: 24px;
+    margin-top: 16px; /* Reduced from 24px to sit closer to the images */
     box-shadow: 0 8px 24px rgba(225, 200, 200, 0.15);
     border: 1px solid rgba(255,255,255,0.6);
     font-size: 0.95rem;
