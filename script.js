@@ -41,7 +41,7 @@ window.addEventListener('DOMContentLoaded', () => {
     initEnvelope();
     initScrollAnimations();
     initCarousel();
-    initAudioController();
+    function initAudioController() {     const musicBtn = document.getElementById('musicBtn');     const audio = document.getElementById('bgMusic');          if(!musicBtn || !audio) return;      // Direct click handler optimized for mobile browsers     musicBtn.addEventListener('click', (e) => {         e.stopPropagation(); // Prevents the click from interfering with other elements                  if (audio.paused) {             audio.play().then(() => {                 musicBtn.classList.add('playing');             }).catch(err => {                 console.log("Audio play blocked by device policies:", err);                 // Secondary fallback attempt for strict mobile browsers                 audio.muted = false;                 audio.play();                 musicBtn.classList.add('playing');             });         } else {             audio.pause();             musicBtn.classList.remove('playing');         }     }); };
 });
 
 /**
@@ -49,7 +49,7 @@ window.addEventListener('DOMContentLoaded', () => {
  * MUSIC / AUDIO ENGINE
  * ==========================================================================
  */
-function initAudioController() {
+function function initAudioController() {     const musicBtn = document.getElementById('musicBtn');     const audio = document.getElementById('bgMusic');          if(!musicBtn || !audio) return;      // Direct click handler optimized for mobile browsers     musicBtn.addEventListener('click', (e) => {         e.stopPropagation(); // Prevents the click from interfering with other elements                  if (audio.paused) {             audio.play().then(() => {                 musicBtn.classList.add('playing');             }).catch(err => {                 console.log("Audio play blocked by device policies:", err);                 // Secondary fallback attempt for strict mobile browsers                 audio.muted = false;                 audio.play();                 musicBtn.classList.add('playing');             });         } else {             audio.pause();             musicBtn.classList.remove('playing');         }     }); } {
     const musicBtn = document.getElementById('musicBtn');
     const audio = document.getElementById('bgMusic');
     
