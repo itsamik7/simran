@@ -133,13 +133,18 @@ img {
 /* Preloader UI */
 #preloader {
     position: fixed;
-    top:0; left:0; width:100vw; height:100vh;
+    top: 0; 
+    left: 0; 
+    width: 100vw; 
+    height: 100vh;
     background: #fff5f5;
     z-index: 9999;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    /* Added to let interactions pass right through seamlessly if fading out */
+    pointer-events: none; 
 }
 .heart-loader {
     width: 50px; height: 50px;
